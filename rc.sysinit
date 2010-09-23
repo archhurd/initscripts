@@ -18,7 +18,7 @@ run_hook sysinit_start
 
 
 # Start the default pager.  It will bail if there is already one running.
-status "Starting the default pager" /hurd/mach-defpager
+/hurd/mach-defpager
 
 # Set up swap space.  This will complain if no default pager is functioning.
 status "Activating Swap" swapon -a
@@ -102,8 +102,9 @@ st /dev/zero root 666 /hurd/storeio -Tzero
 st /dev/time root 644 /hurd/storeio --no-cache time
 st /dev/mem  root 660 /hurd/storeio --no-cache mem
 st /dev/klog root 660 /hurd/streamio kmsg
-st /dev/shm  root 644 /hurd/tmpfs --mode=1777 50%
+st /dev/shm  root 777 /hurd/tmpfs --mode=1777 50%
 st /dev/fd   root 666 /hurd/magic --directory fd
+st /servers/default-pager root 777 /hurd/proxy-defpager
 ln -f -s fd/0 /dev/stdin
 ln -f -s fd/1 /dev/stdout
 ln -f -s fd/2 /dev/stderr
